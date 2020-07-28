@@ -17,8 +17,7 @@
     </head>
     <body>
         <div id="app">
-            <router-view>
-            </router-view>
+            <Index />
         </div>
     </body>
 </html>
