@@ -1932,10 +1932,29 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      bookable: null
+      bookable: null,
+      loading: false
     };
   },
   created: function created() {
@@ -1947,27 +1966,29 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              _context.prev = 0;
-              _context.next = 3;
+              _this.loading = true;
+              _context.prev = 1;
+              _context.next = 4;
               return axios.get("/api/bookables/".concat(_this.$route.params.id));
 
-            case 3:
+            case 4:
               response = _context.sent;
               _this.bookable = response.data;
-              _context.next = 10;
+              _this.loading = false;
+              _context.next = 12;
               break;
 
-            case 7:
-              _context.prev = 7;
-              _context.t0 = _context["catch"](0);
+            case 9:
+              _context.prev = 9;
+              _context.t0 = _context["catch"](1);
               console.log(_context.t0);
 
-            case 10:
+            case 12:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[0, 7]]);
+      }, _callee, null, [[1, 9]]);
     }))();
   }
 });
@@ -38511,7 +38532,29 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div")
+  return _c("div", [
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-8" }, [
+        _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card-body" }, [
+            !_vm.loading
+              ? _c("div", [
+                  _c("h2", [_vm._v(_vm._s(_vm.bookable.title))]),
+                  _vm._v(" "),
+                  _c("hr"),
+                  _vm._v(" "),
+                  _c("article", [_vm._v(_vm._s(_vm.bookable.description))])
+                ])
+              : _c("div", [_vm._v("loading data...")])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-4" }, [
+        _vm._v("\n      Availability & Total Price\n    ")
+      ])
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
