@@ -8,13 +8,13 @@
         :key="'row' + row"
       >
         <div
-          class="col"
+          class="col d-flex align-items-stretch"
           v-for="(bookable, column) in bookablesInRow(row)"
           :key="'row' + row + column"
         >
           <bookable-item
             :title="bookable.title"
-            :content="bookable.content"
+            :description="bookable.description"
             :price="bookable.price"
           ></bookable-item>
         </div>
@@ -58,48 +58,16 @@ export default {
         : Math.ceil(this.bookables.length / this.columns);
     }
   },
-  created() {
+  async created() {
     this.loading = true;
-    setTimeout(() => {
-      this.bookables = [
-        {
-          id: 1,
-          title: "Continental Villas",
-          content:
-            "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quaerat, tempore!",
-          price: 50000
-        },
-        {
-          id: 2,
-          title: "Galaxy Villas",
-          content:
-            "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quaerat, tempore!",
-          price: 50000
-        },
-        {
-          id: 3,
-          title: "Pristine Villas",
-          content:
-            "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quaerat, tempore!",
-          price: 50000
-        },
-        {
-          id: 4,
-          title: "First Class Villas",
-          content:
-            "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quaerat, tempore!",
-          price: 50000
-        },
-        {
-          id: 5,
-          title: "Premium Villas",
-          content:
-            "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quaerat, tempore!",
-          price: 50000
-        }
-      ];
+
+    try {
+      const response = await axios.get("/api/bookables");
+      this.bookables = response.data;
       this.loading = false;
-    }, 1000);
+    } catch (err) {
+      console.log(err);
+    }
   }
 };
 </script>
