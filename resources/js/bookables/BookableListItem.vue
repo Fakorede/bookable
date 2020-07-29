@@ -12,7 +12,7 @@ export default {
   props: {
     title: String,
     description: String,
-    price: Number
+    id: Number
   }
 };
 </script>

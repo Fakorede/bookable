@@ -10,7 +10,6 @@ Vue.use(VueRouter);
 const app = new Vue({
     el: "#app",
     router,
-    mode: "history",
     components: {
         Index: Index
     }
