@@ -34,7 +34,7 @@ export default {
       const response = await axios.get(
         `/api/bookables/${this.$route.params.id}`
       );
-      this.bookable = response.data;
+      this.bookable = response.data.data;
       this.loading = false;
     } catch (err) {
       console.log(err);

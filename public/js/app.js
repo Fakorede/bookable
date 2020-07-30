@@ -1973,7 +1973,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
             case 4:
               response = _context.sent;
-              _this.bookable = response.data;
+              _this.bookable = response.data.data;
               _this.loading = false;
               _context.next = 12;
               break;
@@ -2112,7 +2112,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
             case 4:
               response = _context.sent;
-              _this.bookables = response.data;
+              _this.bookables = response.data.data;
               _this.loading = false;
               _context.next = 12;
               break;

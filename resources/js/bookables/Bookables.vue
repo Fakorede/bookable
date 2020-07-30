@@ -59,7 +59,7 @@ export default {
 
     try {
       const response = await axios.get("/api/bookables");
-      this.bookables = response.data;
+      this.bookables = response.data.data;
       this.loading = false;
     } catch (err) {
       console.log(err);
