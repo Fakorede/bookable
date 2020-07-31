@@ -21,13 +21,18 @@ export default {
     },
     computed: {
         fullStar() {
-            return 4;
+            // if rating == 1.9, round(1.9) = 2 full stars
+            return Math.round(this.rating);
         },
         halfStar() {
-            return false;
+            const fraction = Math.round(
+                (this.rating - Math.floor(this.rating)) * 100
+            );
+            return fraction > 0 && fraction < 50;
         },
         emptyStar() {
-            return 1;
+            // if rating == 1.9, 5 - ceil(1.9) = 3 empty stars
+            return 5 - Math.ceil(this.rating);
         }
     }
 };

@@ -2165,6 +2165,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 // import moment from "moment";
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -2365,13 +2367,16 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     fullStar: function fullStar() {
-      return 4;
+      // if rating == 1.9, round(1.9) = 2 full stars
+      return Math.round(this.rating);
     },
     halfStar: function halfStar() {
-      return false;
+      var fraction = Math.round((this.rating - Math.floor(this.rating)) * 100);
+      return fraction > 0 && fraction < 50;
     },
     emptyStar: function emptyStar() {
-      return 1;
+      // if rating == 1.9, 5 - ceil(1.9) = 3 empty stars
+      return 5 - Math.ceil(this.rating);
     }
   }
 });
@@ -60847,7 +60852,12 @@ var render = function() {
                   _c(
                     "div",
                     { staticClass: "col-md-6 d-flex justify-content-end" },
-                    [_c("star-rating")],
+                    [
+                      _c("star-rating", {
+                        staticClass: "fa-lg",
+                        attrs: { rating: review.rating }
+                      })
+                    ],
                     1
                   )
                 ]),
