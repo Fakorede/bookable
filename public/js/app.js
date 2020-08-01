@@ -2361,22 +2361,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    rating: Number
+    value: Number
   },
   computed: {
     fullStar: function fullStar() {
-      // if rating == 1.9, round(1.9) = 2 full stars
-      return Math.round(this.rating);
+      // if value == 1.9, round(1.9) = 2 full stars
+      return Math.round(this.value);
     },
     halfStar: function halfStar() {
-      var fraction = Math.round((this.rating - Math.floor(this.rating)) * 100);
+      var fraction = Math.round((this.value - Math.floor(this.value)) * 100);
       return fraction > 0 && fraction < 50;
     },
     emptyStar: function emptyStar() {
-      // if rating == 1.9, 5 - ceil(1.9) = 3 empty stars
-      return 5 - Math.ceil(this.rating);
+      // if value == 1.9, 5 - ceil(1.9) = 3 empty stars
+      return 5 - Math.ceil(this.value);
     }
   }
 });
@@ -2416,8 +2418,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {}
+  data: function data() {
+    return {
+      review: {
+        rating: null,
+        content: null
+      }
+    };
+  },
+  created: function created() {}
 });
 
 /***/ }),
@@ -60894,7 +60905,7 @@ var render = function() {
                     [
                       _c("star-rating", {
                         staticClass: "fa-lg",
-                        attrs: { rating: review.rating }
+                        attrs: { value: review.rating }
                       })
                     ],
                     1
@@ -61056,7 +61067,15 @@ var render = function() {
     { staticClass: "d-flex" },
     [
       _vm._l(_vm.fullStar, function(star) {
-        return _c("i", { key: "full" + star, staticClass: "fas fa-star" })
+        return _c("i", {
+          key: "full" + star,
+          staticClass: "fas fa-star",
+          on: {
+            click: function($event) {
+              return _vm.$emit("input", star)
+            }
+          }
+        })
       }),
       _vm._v(" "),
       _vm.halfStar
@@ -61064,7 +61083,15 @@ var render = function() {
         : _vm._e(),
       _vm._v(" "),
       _vm._l(_vm.emptyStar, function(star) {
-        return _c("i", { key: "empty" + star, staticClass: "far fa-star" })
+        return _c("i", {
+          key: "empty" + star,
+          staticClass: "far fa-star",
+          on: {
+            click: function($event) {
+              return _vm.$emit("input", _vm.fullStar + star)
+            }
+          }
+        })
       })
     ],
     2
@@ -61101,35 +61128,54 @@ var render = function() {
           _vm._v("Select the star rating on a scale of 1-5")
         ]),
         _vm._v(" "),
-        _c("star-rating", { staticClass: "fa-3x", attrs: { rating: 5 } })
+        _c("star-rating", {
+          staticClass: "fa-3x",
+          model: {
+            value: _vm.review.rating,
+            callback: function($$v) {
+              _vm.$set(_vm.review, "rating", $$v)
+            },
+            expression: "review.rating"
+          }
+        })
       ],
       1
     ),
     _vm._v(" "),
-    _vm._m(0),
+    _c("div", { staticClass: "form-group" }, [
+      _c("label", { staticClass: "text-muted", attrs: { for: "content" } }, [
+        _vm._v("Describe your experience")
+      ]),
+      _vm._v(" "),
+      _c("textarea", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.review.content,
+            expression: "review.content"
+          }
+        ],
+        staticClass: "form-control",
+        attrs: { name: "content", cols: "30", rows: "10" },
+        domProps: { value: _vm.review.content },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.review, "content", $event.target.value)
+          }
+        }
+      })
+    ]),
     _vm._v(" "),
     _c("button", { staticClass: "btn btn-lg btn-block btn-primary" }, [
       _vm._v("Submit")
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", { staticClass: "text-muted", attrs: { for: "content" } }, [
-        _vm._v("Describe your experience")
-      ]),
-      _vm._v(" "),
-      _c("textarea", {
-        staticClass: "form-control",
-        attrs: { name: "content", cols: "30", rows: "10" }
-      })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

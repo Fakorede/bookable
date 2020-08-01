@@ -4,7 +4,7 @@
             <label class="text-muted"
                 >Select the star rating on a scale of 1-5</label
             >
-            <star-rating :rating="5" class="fa-3x"></star-rating>
+            <star-rating class="fa-3x" v-model="review.rating"></star-rating>
         </div>
         <div class="form-group">
             <label for="content" class="text-muted"
@@ -15,6 +15,7 @@
                 cols="30"
                 rows="10"
                 class="form-control"
+                v-model="review.content"
             ></textarea>
         </div>
 
@@ -24,6 +25,16 @@
 
 <script>
 export default {
-    data() {}
+    data() {
+        return {
+            review: {
+                rating: null,
+                content: null
+            }
+        };
+    },
+    created() {
+        
+    }
 };
 </script>
