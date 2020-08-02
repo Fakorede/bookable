@@ -60,7 +60,7 @@
                             ></textarea>
                         </div>
 
-                        <button
+                      <button
                             @click.prevent="submit"
                             :disabled="loading"
                             class="btn btn-lg btn-block btn-primary"
