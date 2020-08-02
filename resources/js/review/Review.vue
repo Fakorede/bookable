@@ -1,8 +1,6 @@
 <template>
     <div>
-        <div class="row" v-if="error">
-            An unknown error has occured, please try again later!
-        </div>
+        <fatal-error v-if="error"></fatal-error>
         <div class="row" v-else>
             <div :class="[{ 'col-md-4': twoColumns }, { 'd-none': oneColumn }]">
                 <div class="card">
@@ -60,7 +58,7 @@
                             ></textarea>
                         </div>
 
-                      <button
+                        <button
                             @click.prevent="submit"
                             :disabled="loading"
                             class="btn btn-lg btn-block btn-primary"
