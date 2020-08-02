@@ -2467,11 +2467,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       review: {
+        id: null,
         rating: null,
         content: null
       },
@@ -2484,15 +2489,16 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
+    this.review.id = this.$route.params.id;
     this.loading = true;
-    axios.get("/api/reviews/".concat(this.$route.params.id)).then(function (response) {
+    axios.get("/api/reviews/".concat(this.review.id)).then(function (response) {
       _this.existingReview = response.data.data;
     })["catch"](function (error) {
       if (Object(_utils_response__WEBPACK_IMPORTED_MODULE_0__["is404"])(error)) {
-        return axios.get("/api/booking-by-review/".concat(_this.$route.params.id)).then(function (response) {
+        return axios.get("/api/booking-by-review/".concat(_this.review.id)).then(function (response) {
           _this.booking = response.data.data;
         })["catch"](function (error) {
-          _this.error = !Object(_utils_response__WEBPACK_IMPORTED_MODULE_0__["is404"])(err);
+          _this.error = !Object(_utils_response__WEBPACK_IMPORTED_MODULE_0__["is404"])(error);
         });
       }
 
@@ -2516,6 +2522,20 @@ __webpack_require__.r(__webpack_exports__);
     },
     twoColumns: function twoColumns() {
       return this.loading || !this.alreadyReviewed;
+    }
+  },
+  methods: {
+    submit: function submit() {
+      var _this2 = this;
+
+      this.loading = true;
+      axios.post("/api/reviews", this.review).then(function (response) {
+        console.log(response);
+      })["catch"](function (err) {
+        return _this2.error = true;
+      })["finally"](function () {
+        return _this2.loading = false;
+      });
     }
   }
 });
@@ -61358,7 +61378,16 @@ var render = function() {
                           _vm._v(" "),
                           _c(
                             "button",
-                            { staticClass: "btn btn-lg btn-block btn-primary" },
+                            {
+                              staticClass: "btn btn-lg btn-block btn-primary",
+                              attrs: { disabled: _vm.loading },
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.submit($event)
+                                }
+                              }
+                            },
                             [
                               _vm._v(
                                 "\n                        Submit\n                    "

@@ -60,7 +60,11 @@
                             ></textarea>
                         </div>
 
-                        <button class="btn btn-lg btn-block btn-primary">
+                        <button
+                            @click.prevent="submit"
+                            :disabled="loading"
+                            class="btn btn-lg btn-block btn-primary"
+                        >
                             Submit
                         </button>
                     </div>
@@ -76,6 +80,7 @@ export default {
     data() {
         return {
             review: {
+                id: null,
                 rating: null,
                 content: null
             },
@@ -86,24 +91,24 @@ export default {
         };
     },
     created() {
+        this.review.id = this.$route.params.id;
         this.loading = true;
         axios
-            .get(`/api/reviews/${this.$route.params.id}`)
+            .get(`/api/reviews/${this.review.id}`)
             .then(response => {
                 this.existingReview = response.data.data;
             })
             .catch(error => {
                 if (is404(error)) {
                     return axios
-                        .get(`/api/booking-by-review/${this.$route.params.id}`)
+                        .get(`/api/booking-by-review/${this.review.id}`)
                         .then(response => {
                             this.booking = response.data.data;
                         })
                         .catch(error => {
-                            this.error = !is404(err);
+                            this.error = !is404(error);
                         });
                 }
-
                 this.error = true;
             })
             .finally(() => {
@@ -125,6 +130,18 @@ export default {
         },
         twoColumns() {
             return this.loading || !this.alreadyReviewed;
+        }
+    },
+    methods: {
+        submit() {
+            this.loading = true;
+            axios
+                .post(`/api/reviews`, this.review)
+                .then(response => {
+                    console.log(response);
+                })
+                .catch(err => (this.error = true))
+                .finally(() => (this.loading = false));
         }
     }
 };
