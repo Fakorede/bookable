@@ -1920,6 +1920,7 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _utils_response__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/response */ "./resources/js/utils/response.js");
 //
 //
 //
@@ -1978,6 +1979,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     bookableId: String
@@ -2000,7 +2002,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.get("/api/bookables/".concat(this.bookableId, "/availability?from=").concat(this.from, "&to=").concat(this.to)).then(function (response) {
         _this.status = response.status;
       })["catch"](function (error) {
-        if (422 === error.response.status) {
+        if (is(422(error))) {
           _this.errors = error.response.data.errors;
         }
 
@@ -2481,7 +2483,8 @@ __webpack_require__.r(__webpack_exports__);
       existingReview: null,
       loading: false,
       booking: null,
-      error: false
+      error: false,
+      errors: null
     };
   },
   created: function created() {
@@ -2526,11 +2529,21 @@ __webpack_require__.r(__webpack_exports__);
     submit: function submit() {
       var _this2 = this;
 
+      this.errors = null;
       this.loading = true;
       axios.post("/api/reviews", this.review).then(function (response) {
         console.log(response);
       })["catch"](function (err) {
-        return _this2.error = true;
+        if (Object(_utils_response__WEBPACK_IMPORTED_MODULE_0__["is422"])(err)) {
+          var errors = err.response.data.errors;
+
+          if (errors["content"] && _.size(errors) === 1) {
+            _this2.errors = errors;
+            return;
+          }
+        }
+
+        _this2.error = true;
       })["finally"](function () {
         return _this2.loading = false;
       });
@@ -77440,14 +77453,22 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
 /*!****************************************!*\
   !*** ./resources/js/utils/response.js ***!
   \****************************************/
-/*! exports provided: is404 */
+/*! exports provided: is404, is422 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "is404", function() { return is404; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "is422", function() { return is422; });
 var is404 = function is404(err) {
-  return err.response && err.response.status && 404 === err.response.status;
+  return isErrorWithResponseAndStatus(err) && 404 === err.response.status;
+};
+var is422 = function is422(err) {
+  return isErrorWithResponseAndStatus(err) && 422 === err.response.status;
+};
+
+var isErrorWithResponseAndStatus = function isErrorWithResponseAndStatus(err) {
+  return err.response && err.response.status;
 };
 
 /***/ }),
