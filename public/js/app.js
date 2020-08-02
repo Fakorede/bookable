@@ -2438,7 +2438,8 @@ __webpack_require__.r(__webpack_exports__);
         content: null
       },
       existingReview: null,
-      loading: false
+      loading: false,
+      booking: null
     };
   },
   created: function created() {
@@ -2447,7 +2448,12 @@ __webpack_require__.r(__webpack_exports__);
     this.loading = true;
     axios.get("/api/reviews/".concat(this.$route.params.id)).then(function (response) {
       _this.existingReview = response.data.data;
-    })["catch"](function (error) {//
+    })["catch"](function (error) {
+      if (error.response && error.response.status && 404 === error.response.status) {
+        return axios.get("/api/booking-by-review/".concat(_this.$route.params.id)).then(function (response) {
+          _this.booking = response.data.data;
+        });
+      }
     })["finally"](function () {
       _this.loading = false;
     });
