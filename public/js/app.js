@@ -2420,8 +2420,16 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _utils_response__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/response */ "./resources/js/utils/response.js");
-/* harmony import */ var _mixins_validationErrors__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../mixins/validationErrors */ "./resources/js/mixins/validationErrors.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _utils_response__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/response */ "./resources/js/utils/response.js");
+/* harmony import */ var _mixins_validationErrors__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../mixins/validationErrors */ "./resources/js/mixins/validationErrors.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -2502,7 +2510,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mixins: [_mixins_validationErrors__WEBPACK_IMPORTED_MODULE_1__["default"]],
+  mixins: [_mixins_validationErrors__WEBPACK_IMPORTED_MODULE_2__["default"]],
   data: function data() {
     return {
       review: {
@@ -2520,23 +2528,62 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
-    this.review.id = this.$route.params.id;
-    this.loading = true;
-    axios.get("/api/reviews/".concat(this.review.id)).then(function (response) {
-      _this.existingReview = response.data.data;
-    })["catch"](function (error) {
-      if (Object(_utils_response__WEBPACK_IMPORTED_MODULE_0__["is404"])(error)) {
-        return axios.get("/api/booking-by-review/".concat(_this.review.id)).then(function (response) {
-          _this.booking = response.data.data;
-        })["catch"](function (error) {
-          _this.error = !Object(_utils_response__WEBPACK_IMPORTED_MODULE_0__["is404"])(error);
-        });
-      }
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _this.review.id = _this.$route.params.id;
+              _this.loading = true;
+              _context.prev = 2;
+              _context.next = 5;
+              return axios.get("/api/reviews/".concat(_this.review.id));
 
-      _this.error = true;
-    })["finally"](function () {
-      _this.loading = false;
-    });
+            case 5:
+              _this.existingReview = _context.sent.data.data;
+              _context.next = 23;
+              break;
+
+            case 8:
+              _context.prev = 8;
+              _context.t0 = _context["catch"](2);
+
+              if (!Object(_utils_response__WEBPACK_IMPORTED_MODULE_1__["is404"])(_context.t0)) {
+                _context.next = 22;
+                break;
+              }
+
+              _context.prev = 11;
+              _context.next = 14;
+              return axios.get("/api/booking-by-review/".concat(_this.review.id));
+
+            case 14:
+              _this.booking = _context.sent.data.data;
+              _context.next = 20;
+              break;
+
+            case 17:
+              _context.prev = 17;
+              _context.t1 = _context["catch"](11);
+              _this.error = !Object(_utils_response__WEBPACK_IMPORTED_MODULE_1__["is404"])(_context.t1);
+
+            case 20:
+              _context.next = 23;
+              break;
+
+            case 22:
+              _this.error = true;
+
+            case 23:
+              _this.loading = false;
+
+            case 24:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, null, [[2, 8], [11, 17]]);
+    }))();
   },
   computed: {
     alreadyReviewed: function alreadyReviewed() {
@@ -2564,7 +2611,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.post("/api/reviews", this.review).then(function (response) {
         console.log(response);
       })["catch"](function (err) {
-        if (Object(_utils_response__WEBPACK_IMPORTED_MODULE_0__["is422"])(err)) {
+        if (Object(_utils_response__WEBPACK_IMPORTED_MODULE_1__["is422"])(err)) {
           var errors = err.response.data.errors;
 
           if (errors["content"]) {

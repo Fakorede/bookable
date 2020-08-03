@@ -58,7 +58,7 @@
                                 :class="[{ 'is-invalid': errorFor('content') }]"
                             ></textarea>
 
-                           <v-errors :errors="errorFor('content')"></v-errors>
+                            <v-errors :errors="errorFor('content')"></v-errors>
                         </div>
 
                         <button
@@ -77,7 +77,7 @@
 
 <script>
 import { is404, is422 } from "../utils/response";
-import vaidationErrors from "../mixins/validationErrors"
+import vaidationErrors from "../mixins/validationErrors";
 
 export default {
     mixins: [vaidationErrors],
@@ -95,30 +95,31 @@ export default {
             sending: false
         };
     },
-    created() {
+    async created() {
         this.review.id = this.$route.params.id;
         this.loading = true;
-        axios
-            .get(`/api/reviews/${this.review.id}`)
-            .then(response => {
-                this.existingReview = response.data.data;
-            })
-            .catch(error => {
-                if (is404(error)) {
-                    return axios
-                        .get(`/api/booking-by-review/${this.review.id}`)
-                        .then(response => {
-                            this.booking = response.data.data;
-                        })
-                        .catch(error => {
-                            this.error = !is404(error);
-                        });
+
+        try {
+            this.existingReview = (
+                await axios.get(`/api/reviews/${this.review.id}`)
+            ).data.data;
+        } catch (error) {
+            if (is404(error)) {
+                try {
+                    this.booking = (
+                        await axios.get(
+                            `/api/booking-by-review/${this.review.id}`
+                        )
+                    ).data.data;
+                } catch (error) {
+                    this.error = !is404(error);
                 }
+            } else {
                 this.error = true;
-            })
-            .finally(() => {
-                this.loading = false;
-            });
+            }
+        }
+
+        this.loading = false;
     },
     computed: {
         alreadyReviewed() {
@@ -160,7 +161,7 @@ export default {
                     this.error = true;
                 })
                 .finally(() => (this.sending = false));
-        },
+        }
     }
 };
 </script>
