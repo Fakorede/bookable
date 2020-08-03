@@ -1973,7 +1973,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     bookableId: {
-      type: [String, Number],
+      type: [Number, String],
       require: true
     }
   },
@@ -1995,7 +1995,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.get("/api/bookables/".concat(this.bookableId, "/availability?from=").concat(this.from, "&to=").concat(this.to)).then(function (response) {
         _this.status = response.status;
       })["catch"](function (error) {
-        if (is(422(error))) {
+        if (Object(_utils_response__WEBPACK_IMPORTED_MODULE_0__["is422"])(error)) {
           _this.errors = error.response.data.errors;
         }
 
@@ -7066,7 +7066,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\ntextarea.form-control.is-invalid ~ div > div.invalid-feedback[data-v-757df5af] {\r\n    display: block;\n}\r\n", ""]);
+exports.push([module.i, "\n.form-control.is-invalid ~ div > .invalid-feedback[data-v-757df5af] {\r\n    display: block;\n}\r\n", ""]);
 
 // exports
 

@@ -22,7 +22,7 @@ export default {
 </script>
 
 <style scoped>
-textarea.form-control.is-invalid ~ div > div.invalid-feedback {
+.form-control.is-invalid ~ div > .invalid-feedback {
     display: block;
 }
 </style>
