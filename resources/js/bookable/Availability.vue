@@ -48,7 +48,10 @@
 
 <script>
 import { is422 } from "../utils/response";
+import vaidationErrors from "../mixins/validationErrors";
+
 export default {
+    mixins: [vaidationErrors],
     props: {
         bookableId: {
             type: [Number, String],
@@ -60,8 +63,7 @@ export default {
             from: null,
             to: null,
             loading: false,
-            status: null,
-            errors: null
+            status: null
         };
     },
     methods: {
@@ -83,11 +85,6 @@ export default {
                     this.status = error.response.status;
                 })
                 .then(() => (this.loading = false));
-        },
-        errorFor(field) {
-            return this.hasErrors && this.errors[field]
-                ? this.errors[field]
-                : null;
         }
     },
     computed: {

@@ -77,7 +77,10 @@
 
 <script>
 import { is404, is422 } from "../utils/response";
+import vaidationErrors from "../mixins/validationErrors"
+
 export default {
+    mixins: [vaidationErrors],
     data() {
         return {
             review: {
@@ -89,7 +92,6 @@ export default {
             loading: false,
             booking: null,
             error: false,
-            errors: null,
             sending: false
         };
     },
@@ -159,11 +161,6 @@ export default {
                 })
                 .finally(() => (this.sending = false));
         },
-        errorFor(field) {
-            return this.errors !== null && this.errors[field]
-                ? this.errors[field]
-                : null;
-        }
     }
 };
 </script>

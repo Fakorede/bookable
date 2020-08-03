@@ -1921,6 +1921,7 @@ module.exports = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_response__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/response */ "./resources/js/utils/response.js");
+/* harmony import */ var _mixins_validationErrors__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../mixins/validationErrors */ "./resources/js/mixins/validationErrors.js");
 //
 //
 //
@@ -1970,7 +1971,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  mixins: [_mixins_validationErrors__WEBPACK_IMPORTED_MODULE_1__["default"]],
   props: {
     bookableId: {
       type: [Number, String],
@@ -1982,8 +1985,7 @@ __webpack_require__.r(__webpack_exports__);
       from: null,
       to: null,
       loading: false,
-      status: null,
-      errors: null
+      status: null
     };
   },
   methods: {
@@ -2003,9 +2005,6 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function () {
         return _this.loading = false;
       });
-    },
-    errorFor: function errorFor(field) {
-      return this.hasErrors && this.errors[field] ? this.errors[field] : null;
     }
   },
   computed: {
@@ -2422,6 +2421,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_response__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/response */ "./resources/js/utils/response.js");
+/* harmony import */ var _mixins_validationErrors__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../mixins/validationErrors */ "./resources/js/mixins/validationErrors.js");
 //
 //
 //
@@ -2500,7 +2500,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  mixins: [_mixins_validationErrors__WEBPACK_IMPORTED_MODULE_1__["default"]],
   data: function data() {
     return {
       review: {
@@ -2512,7 +2514,6 @@ __webpack_require__.r(__webpack_exports__);
       loading: false,
       booking: null,
       error: false,
-      errors: null,
       sending: false
     };
   },
@@ -2577,9 +2578,6 @@ __webpack_require__.r(__webpack_exports__);
       })["finally"](function () {
         return _this2.sending = false;
       });
-    },
-    errorFor: function errorFor(field) {
-      return this.errors !== null && this.errors[field] ? this.errors[field] : null;
     }
   }
 });
@@ -77549,6 +77547,30 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ValidationErrors_vue_vue_type_template_id_757df5af_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/mixins/validationErrors.js":
+/*!*************************************************!*\
+  !*** ./resources/js/mixins/validationErrors.js ***!
+  \*************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      errors: null
+    };
+  },
+  methods: {
+    errorFor: function errorFor(field) {
+      return null !== this.errors && this.errors[field] ? this.errors[field] : null;
+    }
+  }
+});
 
 /***/ }),
 
