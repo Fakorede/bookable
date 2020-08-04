@@ -18,6 +18,7 @@ $bookable = [
 $factory->define(Bookable::class, function (Faker $faker) use ($bookable) {
     return [
         'title' => Arr::random($bookable) . ' in ' . $faker->city,
-        'description' => $faker->text()
+        'description' => $faker->text(),
+        'price' => random_int(50, 500),
     ];
 });
