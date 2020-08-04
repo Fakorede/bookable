@@ -1976,7 +1976,7 @@ __webpack_require__.r(__webpack_exports__);
   mixins: [_mixins_validationErrors__WEBPACK_IMPORTED_MODULE_1__["default"]],
   props: {
     bookableId: {
-      type: [Number, String],
+      type: [String, Number],
       require: true
     }
   },
@@ -2164,7 +2164,7 @@ __webpack_require__.r(__webpack_exports__);
 // import moment from "moment";
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    bookableId: String
+    bookableId: [String, Number]
   },
   data: function data() {
     return {

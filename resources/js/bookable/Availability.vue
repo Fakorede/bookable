@@ -54,7 +54,7 @@ export default {
     mixins: [vaidationErrors],
     props: {
         bookableId: {
-            type: [Number, String],
+            type: [String, Number],
             require: true
         }
     },
