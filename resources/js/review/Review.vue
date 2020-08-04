@@ -1,7 +1,10 @@
 <template>
     <div>
+        <success v-if="success">
+            You've left a review, thank you very much!
+        </success>
         <fatal-error v-if="error"></fatal-error>
-        <div class="row" v-else>
+        <div class="row" v-if="!success && !error">
             <div :class="[{ 'col-md-4': twoColumns }, { 'd-none': oneColumn }]">
                 <div class="card">
                     <div class="card-body">
@@ -92,7 +95,8 @@ export default {
             loading: false,
             booking: null,
             error: false,
-            sending: false
+            sending: false,
+            success: false
         };
     },
     async created() {
@@ -142,11 +146,12 @@ export default {
         submit() {
             this.errors = null;
             this.sending = true;
+            this.success = false;
 
             axios
                 .post(`/api/reviews`, this.review)
                 .then(response => {
-                    console.log(response);
+                    this.success = response.status === 201;
                 })
                 .catch(err => {
                     if (is422(err)) {
